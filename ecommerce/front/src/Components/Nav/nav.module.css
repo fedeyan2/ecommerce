@@ -1,0 +1,23 @@
+.nav {
+  display: grid;
+  background-color: #222;
+  padding: 0.6em;
+  grid-template-columns: repeat(3, auto);
+}
+
+.nav__ul {
+  grid-column-start: 3;
+  display: flex;
+  justify-content: right;
+  list-style: none;
+  margin-right: 1em;
+}
+
+.nav__ul_li {
+  margin: 0 5px;
+}
+
+.nav__link {
+  text-decoration: none;
+  color: white;
+}
