@@ -24,12 +24,11 @@ export default function login(req, res, next) {
       if (!user) {
         return res.status(info.code).json(responses(info.message, false));
       }
-
       req.login(user, (error) => {
         if (error) {
           return next(error);
         }
-        return res.status(info.code).json(responses(info.message, false));
+        return res.status(info.code).json(responses(info.message, true));
       });
     })(req, res, next);
   } catch (error) {

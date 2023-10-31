@@ -28,9 +28,13 @@ export async function register(req, res, next) {
     const result = await registerUser(userData, next);
 
     //retornar el resultado
-    return res
-      .status(result.statusCode)
-      .json(responses(result.message, result.bool));
+    if (result.statusCode !== 200) {
+      return res
+        .status(result.statusCode)
+        .json(responses(result.message, result.bool));
+    }
+    req.session.fromRegister = true
+    return res.redirect(307, "/auth/login");
   } catch (error) {
     next(error);
   }

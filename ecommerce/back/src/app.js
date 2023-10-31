@@ -3,6 +3,7 @@ import { createServer } from "http";
 import morgan from "morgan";
 import session from "express-session";
 import { Server } from "socket.io";
+import cors from "cors";
 
 //imports propios
 import sessionOptions from "./config/session.js";
@@ -32,17 +33,22 @@ app.use(function (req, res, next) {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"))
-app.use(session(sessionOptions))
-
-//configuracion de passport 
-app.use(passport.initialize())
-app.use(passport.session())
+app.use(
+  cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+  })
+);
+app.use(morgan("dev"));
+app.use(session(sessionOptions));
+//configuracion de passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // estrategias y serializadores
-passportConfig(passport)
+passportConfig(passport);
 
 //rutas
-app.use(router)
+app.use(router);
 
 export default http;
