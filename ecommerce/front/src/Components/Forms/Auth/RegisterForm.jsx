@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import styles from "./forms.module.css";
-import { register } from "../../../api/auth";
+import { isAuthenticated, register } from "../../../api/auth";
 import { Navigate } from "react-router-dom";
+import { AuthContext } from "../../../Context/AuthContext";
+
 const RegisterForm = () => {
+  const { setIsLogin } = useContext(AuthContext);
+
   const errorsModel = {
     username: "",
     password: "",
@@ -64,7 +68,14 @@ const RegisterForm = () => {
       if (data?.message) {
         setRegisterError(data?.message);
       }
+
       return;
+    }
+
+    const loginData = await isAuthenticated();
+    console.log(loginData?.data);
+    if (typeof loginData?.data === "boolean") {
+      setIsLogin(loginData?.data);
     }
 
     return setDone(true);
