@@ -10,17 +10,16 @@ import setUpModels from "./src/utils/setUpModels.js";
 config({ path: "./.env" });
 
 //variables del servidor
-const currentDomain = "http://192.168.1.54";
+const { CURRENT_DOMAIN: currentDomain } = process.env;
 
 //iniciar servidor
 sequelize.authenticate().then(async () => {
   // configurar sequelize
 
-  await sequelize.sync();
+  await sequelize.sync({ force: true });
   console.log("Sequelize configurado");
 
   await setUpModels();
-  console.log("Modelos sincronizados")
 
   http.listen(process.env.PORT || 3002, () =>
     console.log(

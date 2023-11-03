@@ -6,6 +6,7 @@ import { register } from "../controllers/auth/local/register.js";
 import {
   localLoginRules,
   localRegisterRules,
+  recoverPasswordRules,
 } from "../utils/expressValidatorRules.js";
 import login from "../controllers/auth/local/login.js";
 import loginStatus from "../controllers/auth/loginStatus.js";
@@ -14,6 +15,7 @@ import {
   isNOTAuthenticated,
   mustBeAuthenticated,
 } from "../middlewares/authCheck.js";
+import recoverPassword from "../controllers/passwordRecover.js";
 
 const authRoute = Router();
 
@@ -21,5 +23,11 @@ authRoute.post("/register", isNOTAuthenticated, localRegisterRules, register);
 authRoute.post("/login", isNOTAuthenticated, localLoginRules, login);
 authRoute.get("/login_status", loginStatus);
 authRoute.get("/logout", mustBeAuthenticated, logout);
+authRoute.post(
+  "/password_recover",
+  isNOTAuthenticated,
+  recoverPasswordRules,
+  recoverPassword
+);
 
 export default authRoute;

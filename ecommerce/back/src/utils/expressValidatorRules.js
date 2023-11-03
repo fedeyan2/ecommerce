@@ -36,3 +36,13 @@ export const localLoginRules = [
     .withMessage("Se esperaban datos de tipo 'Texto'.")
     .isLength({ min: 6 }),
 ];
+
+export const recoverPasswordRules = [
+  body("email")
+    .exists()
+    .withMessage("No se detecto el campo 'email'")
+    .isString()
+    .withMessage("Se esperaban datos de tipo 'Texto")
+    .isEmail()
+    .withMessage("Introduce un email válido"),
+];
